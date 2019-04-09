@@ -10,13 +10,20 @@ const mapImg = document.querySelectorAll('.img-content img')[0];
 const boatImg = document.querySelectorAll('.img-content img')[1];
 const nav = document.querySelector('nav');
 const navLink = document.querySelector('.nav-link');
-const logo = document.querySelector('.logo-heading')
+const logo = document.querySelector('.logo-heading');
+const intro = document.querySelector('.intro');
 
 
 //Functions
 function rotationYComplete(event) {
     TweenMax.to(".intro img", 3, {rotationY:0});
     event.target.style.filter = "invert(0%)";
+};
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 };
 
 function percentCheck() {
@@ -36,7 +43,7 @@ function percentCheck() {
 
 
 //Listeners
-//Count: 6
+//Count: 8
 funBus.addEventListener('mouseover', event => {
     event.target.style.filter = "invert(100%)";
     TweenMax.to(".intro img", 3, {rotationY:180, onComplete: rotationYComplete, onCompleteParams:[event]});
@@ -86,11 +93,21 @@ logo.addEventListener('mouseover', event => {
     })
 });
 
+intro.addEventListener('dblclick', event => {
+    event.target.style.backgroundColor = `rgb(${getRandomInt(0,255)},${getRandomInt(0,255)},${getRandomInt(0,255)})`;
+    event.target.style.color = `rgb(${getRandomInt(0,255)},${getRandomInt(0,255)},${getRandomInt(0,255)})`;
+})
+
+intro.addEventListener('mousedown', event => {
+    event.preventDefault();
+})
+
 //This is in the assignment, but it seems evil
 nav.addEventListener('click', event => {
     event.preventDefault();
 });
 
+//stopPropogation challenge
 navLink.addEventListener('mouseover', event => {
     event.stopPropagation();
     var original = event.target.style.color;
@@ -99,4 +116,3 @@ navLink.addEventListener('mouseover', event => {
         event.target.style.color = original;
     });
 });
-
